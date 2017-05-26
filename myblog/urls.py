@@ -23,3 +23,4 @@ urlpatterns = [
         namespace='blog',
         app_name='blog')),
 ]
+
