@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'taggit',
     'blog',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -80,6 +81,13 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+# Email sender config
+EMAIL_HOST = 'smtp-mail.outlook.com'
+EMAIL_HOST_USER = 'hellangelzy@hotmail.com'
+EMAIL_HOST_PASSWORD = 'ohmylove1986'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 
 # Password validation

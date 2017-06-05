@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-
+from taggit.managers import TaggableManager
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
@@ -30,13 +30,13 @@ class Post(models.Model):
     status = models.CharField(max_length=10,
                                 choices=STATUS_CHOICES,
                                 default='draft')
+    tags = TaggableManager()
 
     class Meta:
         ordering = ('-publish',)
 
     def __str__(self):
         return self.title
-    
 
     def get_absolute_url(self):
         return reverse('blog:post_detail',
@@ -47,3 +47,43 @@ class Post(models.Model):
     
     objects = models.Manager() # The default manager.
     published = PublishedManager() # Our custom manager.
+    
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post,related_name = 'comments')
+    name = models.CharField(max_length = 80)
+    email = models.EmailField()
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now = True)
+    active = models.BooleanField(default = True)
+
+    class Meta():
+        ordering = ('created',) 
+    
+    def __str__(self):
+        return 'comment by {} on {}'.format(self.name,self.post)
+    
+#通过使用 comment.post就可以从一条评论来取到对应的帖子
+#通过使用post.comments.all()来取回一个帖子所有的评论
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
